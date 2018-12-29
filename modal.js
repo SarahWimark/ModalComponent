@@ -1,8 +1,10 @@
 class Modal extends HTMLElement {
-  constructor() {
-      super()
-      this.attachShadow({ mode: 'open' })
-      this.shadowRoot.innerHTML = /*html*/`
+    constructor() {
+        super()
+        this.attachShadow({
+            mode: 'open'
+        })
+        this.shadowRoot.innerHTML = /*html*/ `
         <style>
             #backdrop {
                 position: fixed;
@@ -20,16 +22,52 @@ class Modal extends HTMLElement {
                 top: 15vh;
                 left: 25%;
                 width: 50%;
-                height: 30rem;
                 background: white;
                 border-radius: 3px;
                 box-shadow: 0 2px 8px rgba(0,0,0,0.26);
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+
+            header {
+                padding: 1rem;
+            }
+
+            header h1 {
+                font-size: 1.25rem;
+            }
+
+            #main {
+                padding: 1rem;
+            }
+
+            #actions {
+                border-top: 1px solid #ccc;
+                padding: 1rem;
+                display: flex;
+                justify-content: flex-end;
+            }
+
+            #actions button {
+                margin: 0 0.25rem;
             }
         </style>
         <div id="backdrop"></div>
-        <div id="modal"></div>
+        <div id="modal">
+           <header>
+               <h1>Please confirm</h1>
+           </header>
+           <section id="main">
+               <slot></slot>
+           </section>
+           <section id="actions">
+               <button>Cancel</button>
+               <button>Confirm</button>
+           </section>
+        </div>
       `
-  }
+    }
 }
 
 customElements.define('sw-modal', Modal)
